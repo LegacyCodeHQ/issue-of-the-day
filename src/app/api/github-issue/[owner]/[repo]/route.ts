@@ -1,6 +1,6 @@
 import {octokit} from "@/app/lib/octokit";
 import {NextResponse} from "next/server";
-import {SummarizedGitHubIssue} from "@/app/api/github-issue/[owner]/[repo]/types";
+import {summarizeGitHubIssue} from "@/app/api/github-issue/[owner]/[repo]/types";
 
 function getToday() {
   return new Date().toISOString().split('T')[0];
@@ -10,19 +10,6 @@ function getRandomIndex(issueCount: number): number {
   const today: string = getToday();
   const seed = Array.from(today).reduce((acc, char) => acc + char.charCodeAt(0), 0);
   return seed % issueCount;
-}
-
-function summarizeGitHubIssue(issue: any): SummarizedGitHubIssue {
-  return {
-    title: issue.title,
-    number: issue.number,
-    html_url: issue.html_url,
-    state: issue.state,
-    created_at: issue.created_at,
-    comments: issue.comments,
-    body: issue.body,
-    author: issue.user.login
-  };
 }
 
 export async function GET(
