@@ -5,6 +5,12 @@ function getToday() {
   return new Date().toISOString().split('T')[0];
 }
 
+function getRandomIndex(issueCount: number): number {
+  const today: string = getToday();
+  const seed = Array.from(today).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return seed % issueCount;
+}
+
 export async function GET(
   _: Request,
   {params}: { params: { owner: string; repo: string } }
@@ -22,10 +28,11 @@ export async function GET(
   });
 
   const issues = octokitResponse.data;
-  const today: string = getToday();
-  const seed = Array.from(today).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const randomIndex = seed % issues.length;
-  const randomIssue = issues[randomIndex]
+  const issueCount = issues.length;
+  if (issueCount === 0) {
+    return NextResponse.json({message: "No open issues found"}, {status: 404});
+  }
 
+  const randomIssue = issues[getRandomIndex(issueCount)];
   return NextResponse.json(randomIssue)
 }
