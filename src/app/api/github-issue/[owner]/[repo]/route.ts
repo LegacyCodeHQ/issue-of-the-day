@@ -48,6 +48,5 @@ export async function GET(
   }
 
   const randomIssue = issues[getRandomIndex(issueCount)];
-  const formattedResponse = summarizeGitHubIssue(randomIssue);
-  return NextResponse.json(formattedResponse);
+  return NextResponse.json(summarizeGitHubIssue(randomIssue));
 }
