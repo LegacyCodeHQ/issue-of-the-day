@@ -1,6 +1,10 @@
 import {octokit} from "@/app/lib/octokit";
 import {NextResponse} from "next/server";
 
+function getToday() {
+  return new Date().toISOString().split('T')[0];
+}
+
 export async function GET(
   _: Request,
   {params}: { params: { owner: string; repo: string } }
@@ -17,5 +21,11 @@ export async function GET(
     }
   });
 
-  return NextResponse.json(octokitResponse.data)
+  const issues = octokitResponse.data;
+  const today: string = getToday();
+  const seed = Array.from(today).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const randomIndex = seed % issues.length;
+  const randomIssue = issues[randomIndex]
+
+  return NextResponse.json(randomIssue)
 }
