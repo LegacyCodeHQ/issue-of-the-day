@@ -2,10 +2,10 @@ import {SummarizedGitHubIssue} from "@/app/api/github-issue/[owner]/[repo]/types
 import {IssueOfTheDayCard} from "@/app/[owner]/[repo]/IssueOfTheDayCard";
 
 interface IssueOfTheDayPageProps {
-  params: {
+  params: Promise<{
     owner: string;
     repo: string;
-  };
+  }>;
 }
 
 export default async function IssueOfTheDayPage({params}: IssueOfTheDayPageProps) {

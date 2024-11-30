@@ -14,7 +14,7 @@ function getRandomIndex(issueCount: number): number {
 
 export async function GET(
   _: Request,
-  {params}: { params: { owner: string; repo: string } }
+  {params}: { params: Promise<{ owner: string; repo: string }> }
 ) {
   const {owner, repo} = await params;
 
