@@ -12,6 +12,17 @@ function getRandomIndex(issueCount: number): number {
   return seed % issueCount;
 }
 
+function getSecondsUntilMidnightUTC(): number {
+  const now = new Date();
+  const utcMidnight = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1, // next day
+    0, 0, 0, 0 // midnight
+  ));
+  return Math.floor((utcMidnight.getTime() - now.getTime()) / 1000);
+}
+
 export async function GET(
   _: Request,
   {params}: { params: Promise<{ owner: string; repo: string }> }
@@ -35,5 +46,13 @@ export async function GET(
   }
 
   const randomIssue = issues[getRandomIndex(issueCount)];
-  return NextResponse.json(summarizeGitHubIssue(randomIssue));
+
+  return NextResponse.json(
+    summarizeGitHubIssue(randomIssue),
+    {
+      headers: {
+        'Cache-Control': `public, s-maxage=${(getSecondsUntilMidnightUTC())}, stale-while-revalidate=59`,
+      },
+    }
+  );
 }
