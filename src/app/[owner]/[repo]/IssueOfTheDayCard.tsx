@@ -7,13 +7,26 @@ import {GitPullRequest, MessageSquare} from 'lucide-react'
 import Link from 'next/link'
 import {SummarizedGitHubIssue} from "@/app/api/github-issue/[owner]/[repo]/types";
 
-export const IssueOfTheDayCard: FC<{ issue: SummarizedGitHubIssue }> = ({issue}) => {
+export const IssueOfTheDayCard: FC<{ 
+  issue: SummarizedGitHubIssue;
+  owner: string;
+  repo: string;
+}> = ({issue, owner, repo}) => {
   const createdAt = new Date(issue.created_at)
   const timeAgo = formatDistanceToNow(createdAt, {addSuffix: true})
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <Card className="max-w-md w-full">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-xl font-bold text-center">
+        Issue of the Day
+      </h1>
+      <Link 
+        href={`https://github.com/${owner}/${repo}`} 
+        className="text-3xl font-medium hover:underline text-muted-foreground mb-6"
+      >
+        {owner}/{repo}
+      </Link>
+      <Card className="max-w-2xl w-full">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between">
             <CardTitle className="text-lg font-semibold line-clamp-2">
@@ -25,8 +38,10 @@ export const IssueOfTheDayCard: FC<{ issue: SummarizedGitHubIssue }> = ({issue})
               {issue.state}
             </Badge>
           </div>
-          <div className="text-sm text-muted-foreground mt-1">
-            #{issue.number} opened {timeAgo}
+          <div className="flex items-center space-x-1 text-sm text-muted-foreground mt-1">
+            <span>#{issue.number}</span>
+            <span>•</span>
+            <span>opened {timeAgo}</span>
           </div>
         </CardHeader>
         <CardContent className="pb-2">
@@ -71,4 +86,3 @@ export const IssueOfTheDayCard: FC<{ issue: SummarizedGitHubIssue }> = ({issue})
     </div>
   )
 }
-

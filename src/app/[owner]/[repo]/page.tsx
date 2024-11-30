@@ -21,5 +21,9 @@ export default async function IssueOfTheDayPage({params}: IssueOfTheDayPageProps
 
   const issue: SummarizedGitHubIssue = await response.json();
 
-  return <IssueOfTheDayCard issue={issue}/>
+  return <IssueOfTheDayCard
+    issue={issue}
+    owner={owner}
+    repo={repo}
+  />
 }
