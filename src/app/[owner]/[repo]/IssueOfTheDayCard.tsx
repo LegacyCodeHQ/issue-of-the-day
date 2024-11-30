@@ -16,7 +16,7 @@ export const IssueOfTheDayCard: FC<{
   const timeAgo = formatDistanceToNow(createdAt, {addSuffix: true})
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center">
       <h1 className="text-xl font-bold text-center">
         Issue of the Day
       </h1>
