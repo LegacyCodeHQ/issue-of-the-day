@@ -14,7 +14,7 @@ export default async function IssueOfTheDayPage({params}: IssueOfTheDayPageProps
   const encodedOwner = encodeURIComponent(owner);
   const encodedRepo = encodeURIComponent(repo);
 
-  const response = await fetch(`/api/github-issue/${encodedOwner}/${encodedRepo}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/github-issue/${encodedOwner}/${encodedRepo}`);
 
   const issue: SummarizedGitHubIssue = await response.json();
 
