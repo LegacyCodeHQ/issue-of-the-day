@@ -54,8 +54,17 @@ export default async function IssueOfTheDayPage({params}: IssueOfTheDayPageProps
     const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/github-issue/${encodedOwner}/${encodedRepo}`);
     const nextUpdateTime = getNextUpdateTime(response);
 
-    const issue: SummarizedGitHubIssue = await response.json();
-    console.log('Next update time', nextUpdateTime);
+    let issue: SummarizedGitHubIssue;
+    let text: string | null = null;
+    try {
+        text = await response.text();
+        console.log('API Response:', text);
+        issue = JSON.parse(text);
+    } catch (error) {
+        console.error('Failed to parse API response:', error);
+        console.error('Response body:', text);
+        throw new Error(`Failed to load issue: Invalid JSON response from API`);
+    }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
