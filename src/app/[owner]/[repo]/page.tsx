@@ -58,7 +58,6 @@ export default async function IssueOfTheDayPage({params}: IssueOfTheDayPageProps
     let text: string | null = null;
     try {
         text = await response.text();
-        console.log('API Response:', text);
         issue = JSON.parse(text);
     } catch (error) {
         console.error('Failed to parse API response:', error);
