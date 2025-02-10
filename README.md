@@ -11,7 +11,7 @@ s [tweet](https://x.com/peer_rich/status/1862609684768649570).
 
 ## Usage
 
-Visit [issueoftheday.com](https://issueoftheday.com) to try it out.
+~~Visit [issueoftheday.com](https://issueoftheday.com) to try it out.~~
 
 By default, the site redirects to `/calcom/cal.com`, but you can explore issues from any public GitHub repository using
 the `issueoftheday.com/{owner}/{repo}` format.
@@ -39,6 +39,10 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically
 optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Deployment
+
+The application requires the following environment variables - `NEXT_PUBLIC_APP_URL` and `GITHUB_TOKEN`.
 
 ## License
 
